@@ -5,13 +5,27 @@ import { Link } from 'react-router-dom';
 const StudentBookmarkItem = () => {
     document.body.classList.add('dashboard-background');
     const itemDetials = [{
-        'itemName': "",
-        "brand": "",
-        "type": "",
-        "condition": "",
-        "price": "",
-        "details": ""
-    }]
+        "id": 1,
+        'itemName': "Microwave",
+        "brand": "panasonic",
+        "type": "Electronic",
+        "condition": "Good",
+        "price": "40$"
+    }, {
+        "id": 2,
+        'itemName': "Bed Frame",
+        "brand": "xylo",
+        "type": "Furniture",
+        "condition": "Excellent",
+        "price": "50$"
+    }, {
+        "id": 3,
+        'itemName': "String lights",
+        "brand": "sonic",
+        "type": "Electronic",
+        "condition": "Mint",
+        "price": "8$"
+    }];
     return (
         <div className="container">
             <section className="card">
@@ -28,42 +42,20 @@ const StudentBookmarkItem = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Microwave</td>
-                            <td>panasonic</td>
-                            <td>Electronic</td>
-                            <td>Good</td>
-                            <td>40$</td>
-                            <td>
-                                <div className="button-container">
-                                    <a href="student_Dashboard.html" className="dashbutton">Details</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Bed Frame</td>
-                            <td>xylo</td>
-                            <td>Furniture</td>
-                            <td>Excellent</td>
-                            <td>50$</td>
-                            <td>
-                                <div className="button-container">
-                                    <a href="student_Dashboard.html" className="dashbutton">Details</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>String lights</td>
-                            <td>sonic</td>
-                            <td>Electronic</td>
-                            <td>Mint</td>
-                            <td>8$</td>
-                            <td>
-                                <div className="button-container">
-                                    <a href="student_Dashboard.html" className="dashbutton">Details</a>
-                                </div>
-                            </td>
-                        </tr>
+                        {itemDetials.map((items) => (
+                            <tr key={items.id}>
+                                <td>{items.itemName}</td>
+                                <td>{items.brand}</td>
+                                <td>{items.type}</td>
+                                <td>{items.condition}</td>
+                                <td>{items.price}</td>
+                                <td>
+                                    <div className="button-container">
+                                        <a href="student_Dashboard.html" className="dashbutton">Details</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
 
