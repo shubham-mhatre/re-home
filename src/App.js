@@ -9,6 +9,7 @@ import Contactus from './Components/Contactus';
 import StudentDashboard from './Components/Student/StudentDashboard';
 import StudentEditprofile from './Components/Student/StudentEditprofile';
 import StudentBookmarkItem from './Components/Student/StudentBookmarkItem';
+import StudentSearchItem from './Components/Student/StudentSearchItem';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/studentdashboard" element={<StudentDashboard />}></Route>
           <Route path="/studenteditprofile" element={<StudentEditprofile />}></Route>
           <Route path="/studentbookmarkitem" element={<StudentBookmarkItem />}></Route>
+          <Route path="/studentsearchitem" element={<StudentSearchItem />}></Route>
         </Routes>
       </Router>
 

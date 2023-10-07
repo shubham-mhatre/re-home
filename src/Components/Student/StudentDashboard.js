@@ -19,7 +19,7 @@ const StudentDashboard = () => {
                 <div className="left-side">
                     <Link to={"/studenteditprofile"} className="dashbutton">Edit Profile</Link>
                     <Link to={"/studentbookmarkitem"} className="dashbutton">Bookmarked Items </Link>
-                    <Link href="#" className="dashbutton">Search Items </Link>
+                    <Link to={"/studentsearchitem"} className="dashbutton">Search Items </Link>
                     <h2>
                         <p>Personal Information</p>
                     </h2>
