@@ -17,7 +17,7 @@ const StudentDashboard = () => {
             <div className="content">
 
                 <div className="left-side">
-                    <Link to={"Profile.html"} className="dashbutton">Edit Profile</Link>
+                    <Link to={"/studenteditprofile"} className="dashbutton">Edit Profile</Link>
                     <Link href="#" className="dashbutton">Bookmarked Items </Link>
                     <Link href="#" className="dashbutton">Search Items </Link>
                     <h2>

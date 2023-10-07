@@ -7,6 +7,7 @@ import Login from './Components/Login';
 import Aboutus from './Components/Aboutus';
 import Contactus from './Components/Contactus';
 import StudentDashboard from './Components/Student/StudentDashboard';
+import StudentEditprofile from './Components/Student/StudentEditprofile';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/about" element={<Aboutus />}></Route>
           <Route path="/contact" element={<Contactus />}></Route>
           <Route path="/studentdashboard" element={<StudentDashboard />}></Route>
+          <Route path="/studenteditprofile" element={<StudentEditprofile />}></Route>
         </Routes>
       </Router>
 
