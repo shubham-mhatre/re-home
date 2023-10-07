@@ -423,7 +423,22 @@ input[type="submit"]
   }
 }
 
-/* index.css */
+
+.ftable {
+  border-collapse: collapse;
+  border: #ffffff;
+  border-color: #ffffff;
+  margin: 25px;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  min-width: 50px;
+  
+}
+.ftable th,
+.ftable td {
+  padding: 12px 20px;
+  color: #ffffff;
+}
 
 table,
 td {
@@ -433,6 +448,6 @@ td {
 thead
 {
     border:1px solid #a3a1a1;
-    background-color: #333;
+    background-color: #f19d9d;
     color: #ffffff;
 }
