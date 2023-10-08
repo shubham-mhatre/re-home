@@ -15,6 +15,7 @@ import SignUp from './Components/SignUp';
 import { useState } from 'react';
 import Logout from './Components/Logout';
 import AdminDashboard from './Components/Admin/AdminDashboard';
+import StudentAddItem from './Components/Student/StudentAddItem';
 
 function App() {
   const[isLogin,setIsLogin]=useState(false);
@@ -41,6 +42,7 @@ function App() {
           <Route path="/forgetpassword" element={<Forgetpassword />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/admindashboard" element={<AdminDashboard />}></Route>
+          <Route path="/studentadditem" element={<StudentAddItem />}></Route>
         </Routes>
       </Router>
 

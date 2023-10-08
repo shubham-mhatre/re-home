@@ -40,7 +40,7 @@ const StudentDashboard = () => {
                 </div>
                 <div className="right-side">
                     <div className="button-container">
-                        <Link to={"post_jobs.html"}> <button className="dashbutton">Add Item</button></Link>
+                        <Link to={"/studentadditem"}> <button className="dashbutton">Add Item</button></Link>
                         <Link to={"post_jobs.html"}> <button className="dashbutton">Sold Items</button></Link>
                     </div>
                     <h2>Items List</h2>
