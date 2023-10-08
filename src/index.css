@@ -454,3 +454,23 @@ thead
 .bgColorPink{
   background-color: #f19d9d;
 }
+
+.wrapper{
+  display: flex;
+  justify-content: center; 
+  margin-top: 40px;
+}
+
+.tile-container {
+  flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px; 
+  display: flex;
+  flex-direction: row;
+  }
+
+  .secondarycontent {
+  
+    text-align: center;
+  }
