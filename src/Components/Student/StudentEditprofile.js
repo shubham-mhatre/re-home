@@ -12,6 +12,10 @@ const StudentEditprofile = () => {
     const [address, setAddress] = useState('1006 Greek Row');
     const [email, setEmail] = useState('Harold@gmail.com');
     const [password, setPassword] = useState('*******');
+
+    const handleProdileUpdate=(e)=>{
+        alert("profile updated successfully");
+    }
   return (
     <div className="container">
             <section className="card">
@@ -108,7 +112,7 @@ const StudentEditprofile = () => {
                 </form>
                 <br />
                 <div className="button-container">
-                    <a href="" className="dashbutton">Save</a>
+                    <a className="dashbutton" onClick={handleProdileUpdate}>Save</a>
                     <Link to={"/studentdashboard"} className="dashbutton">Back to Dashboard</Link>
                 </div>
             </section>

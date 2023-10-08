@@ -52,7 +52,7 @@ const StudentBookmarkItem = () => {
                                 <td>{items.price}</td>
                                 <td>
                                     <div className="button-container">
-                                        <a href="student_Dashboard.html" className="dashbutton">Details</a>
+                                        <Link to={`/studentitemdetail/${items.id}`} className="dashbutton">Details</Link>
                                     </div>
                                 </td>
                             </tr>
