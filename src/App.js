@@ -14,16 +14,19 @@ import Forgetpassword from './Components/Forgetpassword';
 import SignUp from './Components/SignUp';
 import { useState } from 'react';
 import Logout from './Components/Logout';
+import AdminDashboard from './Components/Admin/AdminDashboard';
 
 function App() {
   const[isLogin,setIsLogin]=useState(false);
-  const handleIsLogin =(isLoginFromLoginComponent)=>{
+  const[role,setRole]=useState('student');
+  const handleIsLogin =(isLoginFromLoginComponent,rolefromLoginComponent)=>{
     setIsLogin(isLoginFromLoginComponent)
+    setRole(rolefromLoginComponent)
   }
   return (
     <>
       <Router>
-        <Header isLogin={isLogin}/>
+        <Header isLogin={isLogin} role={role}/>
         <Routes>
           <Route path="" element={<Home />}></Route>
           <Route path="/services" element={<Services />}></Route>
@@ -37,6 +40,7 @@ function App() {
           <Route path="/studentsearchitem" element={<StudentSearchItem />}></Route>
           <Route path="/forgetpassword" element={<Forgetpassword />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/admindashboard" element={<AdminDashboard />}></Route>
         </Routes>
       </Router>
 

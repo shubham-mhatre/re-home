@@ -11,6 +11,7 @@ const Login = (props) => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const [isLogin,setLogin]=useState(false);
+    const [role,setRole]=useState('student');
     const navigate = useNavigate();
 
     const handleSubmit=(e)=>{
@@ -22,11 +23,19 @@ const Login = (props) => {
 
         const response=Loginservice.login(formData);
         setLogin(response.isLoggedin);
-        props.onLogin(response.isLoggedin);
+        setRole(response.role);
+        props.onLogin(response.isLoggedin,response.role);
         console.log('isLogin'+isLogin);
+        console.log('role'+role);
 
         if(response.isLoggedin){
-            navigate('/studentdashboard');
+            if(response.role === "student"){
+                navigate('/studentdashboard');
+            }else{
+                navigate('/admindashboard');
+            }    
+        }else{
+            alert('Invalid credentials');
         }
         
     }
