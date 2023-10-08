@@ -53,7 +53,7 @@ const Login = () => {
                 </form>
                 <br />
                 <div className="button-container">
-                    <a href="Role.html" className="dashbutton">Register</a>
+                    <Link to={"/signup"} className="dashbutton">Register</Link>
                     <Link to={"/forgetpassword"} className="dashbutton">Forgot Password</Link>
                 </div>
 

@@ -11,6 +11,7 @@ import StudentEditprofile from './Components/Student/StudentEditprofile';
 import StudentBookmarkItem from './Components/Student/StudentBookmarkItem';
 import StudentSearchItem from './Components/Student/StudentSearchItem';
 import Forgetpassword from './Components/Forgetpassword';
+import SignUp from './Components/SignUp';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/studentbookmarkitem" element={<StudentBookmarkItem />}></Route>
           <Route path="/studentsearchitem" element={<StudentSearchItem />}></Route>
           <Route path="/forgetpassword" element={<Forgetpassword />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
         </Routes>
       </Router>
 
