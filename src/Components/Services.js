@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
+
 
 const Services = () => {
 	document.body.classList.remove('dashboard-background');
@@ -17,8 +19,7 @@ const Services = () => {
 				</div>
 				<div className="acad-img"></div>
 				<div style={{display:'flex',justifyContent:'center'}}>
-					{/* <a href="Academic_Institution_registration.html" class="button">Register</a> */}
-					<a href="Job_view.html"><button className="dashbutton">Register</button></a>
+					<Link to={"/signup"}><button className="dashbutton">Register</button></Link>
 				</div>
 			</div>
 

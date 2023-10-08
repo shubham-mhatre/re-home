@@ -18,6 +18,7 @@ import AdminDashboard from './Components/Admin/AdminDashboard';
 import StudentAddItem from './Components/Student/StudentAddItem';
 import StudentItemDetail from './Components/Student/StudentItemDetail';
 import StudentEditItemDetails from './Components/Student/StudentEditItemDetails';
+import StudentSolditems from './Components/Student/StudentSolditems';
 
 function App() {
   const[isLogin,setIsLogin]=useState(false);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/studentadditem" element={<StudentAddItem />}></Route>
           <Route path="/studentitemdetail/:itemid" element={<StudentItemDetail />}></Route>
           <Route path="/studentedititemdetail/:itemid" element={<StudentEditItemDetails />}></Route>
+          <Route path="/studentsolditems" element={<StudentSolditems />}></Route>
         </Routes>
       </Router>
 

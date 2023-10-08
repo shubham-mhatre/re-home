@@ -6,11 +6,11 @@ const StudentDashboard = () => {
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
     const itemDetails=[
-        {'id':1,'item':'Item 1'},
-        {'id':2,'item':'Item 2'},
-        {'id':3,'item':'Item 3'},
-        {'id':4,'item':'Item 4'},
-        {'id':5,'item':'Item 5'}
+        {'id':1,'item':'Microwave'},
+        {'id':2,'item':'Bed Frame'},
+        {'id':3,'item':'String lights'},
+        {'id':4,'item':'TV'},
+        {'id':5,'item':'Refrigerator'}
     ]
     return (
         <div>
@@ -20,7 +20,7 @@ const StudentDashboard = () => {
                 <div className="left-side">
                     <Link to={"/studenteditprofile"} className="dashbutton">Edit Profile</Link>
                     <Link to={"/studentbookmarkitem"} className="dashbutton">Bookmarked Items </Link>
-                    <Link to={"/studentsearchitem"} className="dashbutton">Search Items </Link>
+                    <Link to={"/studentsolditems"} className="dashbutton">Search Items </Link>
                     <h2>
                         <p>Personal Information</p>
                     </h2>
@@ -41,7 +41,7 @@ const StudentDashboard = () => {
                 <div className="right-side">
                     <div className="button-container">
                         <Link to={"/studentadditem"}> <button className="dashbutton">Add Item</button></Link>
-                        <Link to={"post_jobs.html"}> <button className="dashbutton">Sold Items</button></Link>
+                        <Link to={"/studentsolditems"}> <button className="dashbutton">Sold Items</button></Link>
                     </div>
                     <h2>Items List</h2>
                     <div className="itemlist">

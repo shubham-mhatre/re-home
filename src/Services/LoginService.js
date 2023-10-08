@@ -6,9 +6,9 @@ class LoginService{
             'isLoggedin':false,
             'role':'student'
         }
-        if(reqData.email === "abc@gmail.com" && reqData.password ==="abc@123"){
+        if(reqData.email.toLowerCase() === "abc@gmail.com" && reqData.password.toLowerCase() ==="abc@123"){
             response.isLoggedin=true
-        }else if(reqData.email === "admin@gmail.com" && reqData.password ==="abc@123"){
+        }else if(reqData.email.toLowerCase() === "admin@gmail.com" && reqData.password.toLowerCase() ==="abc@123"){
             response.isLoggedin=true
             response.role='admin'
         }
