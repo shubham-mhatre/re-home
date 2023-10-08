@@ -48,7 +48,7 @@ const StudentDashboard = () => {
                         {itemDetails.map(item=>(
                             <div className="item-posting" key={item.id}>
                                 <h3>{item.item}</h3>
-                                <a href="Applicants_Academia.html"><button className="dashbutton">Edit</button></a>
+                                <Link to={`/studentedititemdetail/${item.id}`}><button className="dashbutton">Edit</button></Link>
                                 <Link to={`/studentitemdetail/${item.id}`}><button className="dashbutton">Details</button></Link>
                             </div>
                         ))}
