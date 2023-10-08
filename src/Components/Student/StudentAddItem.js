@@ -9,10 +9,17 @@ const StudentAddItem = () => {
     const [type, setType] = useState('');
     const [condition, setCondition] = useState('');
     const [price, setPrice] = useState('');
+    const [itemImage,setItemImage]=useState(null);
+
+    const handleFileChange = (event) => {
+        setItemImage({
+          [event.target.name]: event.target.files[0],
+        });
+    };
 
     const handleSave = (e) => {
         e.preventDefault();
-        if (itemName === "" || brand === "" || type === "" || condition === "" || price === "") {
+        if (itemName === "" || brand === "" || type === "" || condition === "" || price === ""|| itemImage===null) {
             alert('All fields are required');
         } else {
             alert('item saved successfully');
@@ -89,7 +96,7 @@ const StudentAddItem = () => {
                                 <th><label htmlFor="price"><b>Price</b></label></th>
                                 <td>
                                     <input
-                                        type="email"
+                                        type="text"
                                         name="price"
                                         id="price"
                                         placeholder="Enter price"
@@ -98,6 +105,12 @@ const StudentAddItem = () => {
                                         required
                                     />
                                 </td>
+                            </tr>
+                            <tr>
+                                <th><label htmlFor="itemImage"><b>Item image</b></label></th>
+                                    <td><input type="file" id="itemImage" name="itemImage" 
+                                        onChange={handleFileChange} required/>
+                                    </td>
                             </tr>
                         </tbody>
                     </table>

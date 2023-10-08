@@ -1,32 +1,20 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Link } from 'react-router-dom';
 
 
 const StudentSearchItem = () => {
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
-    const itemDetials = [{
-        "id": 1,
-        'itemName': "Microwave",
-        "brand": "panasonic",
-        "type": "Electronic",
-        "condition": "Good",
-        "price": "40$"
-    }, {
-        "id": 2,
-        'itemName': "Bed Frame",
-        "brand": "xylo",
-        "type": "Furniture",
-        "condition": "Excellent",
-        "price": "50$"
-    }, {
-        "id": 3,
-        'itemName': "String lights",
-        "brand": "sonic",
-        "type": "Electronic",
-        "condition": "Mint",
-        "price": "8$"
-    }];
+    const [type, setType] = useState('');
+
+    const handleBookmarkItem=(e)=>{
+        alert("item bookmarked successfully");
+    }
+
+    const handlePurchaseRequest=(e)=>{
+        alert("purchase requested submitted to owner");
+    }
+    
     return (
         <div className="container">
             <section className="card">
@@ -47,11 +35,16 @@ const StudentSearchItem = () => {
                     <tr>
                         <th><label htmlFor="type"><b>Type</b></label></th>
                         <td>
-                            <input
-                                type="text"
-                                name="type"
-                                id="type"
-                            />
+                        <select style={{ width: '100%' }}
+                            name="type"
+                            id="type"
+                            value={type}
+                            onChange={(e) => setType(e.target.value)}
+                        required>
+                            <option value="" disabled>Select Type</option>
+                            {typeData.map(type=>(
+                            <option value={type.value}>{type.text}</option>))}
+                        </select>
                         </td>
                     </tr>
                     <tr>
@@ -92,17 +85,17 @@ const StudentSearchItem = () => {
                                 <td>{items.price}</td>
                                 <td>
                                     <div className="button-container">
-                                        <a href="student_Dashboard.html" className="dashbutton">Details</a>
+                                        <Link to={`/studentitemdetail/${items.id}`} className="dashbutton">Details</Link>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="button-container">
-                                        <a href="student_Dashboard.html" className="dashbutton">Bookmark</a>
+                                        <a className="dashbutton" onClick={handleBookmarkItem}>Bookmark</a>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="button-container">
-                                        <a href="student_Dashboard.html" className="dashbutton">Purchase Request</a>
+                                        <a className="dashbutton" onClick={handlePurchaseRequest}>Purchase Request</a>
                                     </div>
                                 </td>
                             </tr>
@@ -120,4 +113,29 @@ const StudentSearchItem = () => {
     )
 }
 
+const itemDetials = [{
+    "id": 1,
+    'itemName': "Microwave",
+    "brand": "panasonic",
+    "type": "Electronic",
+    "condition": "Good",
+    "price": "40$"
+}, {
+    "id": 2,
+    'itemName': "Bed Frame",
+    "brand": "xylo",
+    "type": "Furniture",
+    "condition": "Excellent",
+    "price": "50$"
+}, {
+    "id": 3,
+    'itemName': "String lights",
+    "brand": "sonic",
+    "type": "Electronic",
+    "condition": "Mint",
+    "price": "8$"
+}];
+const typeData = [{ "value": "Electronic", "text": "Electronic" },
+{ "value": "Furniture", "text": "Furniture" },
+{ "value": "Clothing", "text": "Clothing" }];
 export default StudentSearchItem

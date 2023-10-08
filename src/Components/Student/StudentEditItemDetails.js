@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const StudentEditItemDetails = () => {
     document.body.classList.remove('home-background');
@@ -11,6 +11,20 @@ const StudentEditItemDetails = () => {
     const [type, setType] = useState('');
     const [condition, setCondition] = useState('');
     const [price, setPrice] = useState('');
+    const [itemImage,setItemImage]=useState(null);
+    const navigate = useNavigate();
+
+    const handleFileChange = (event) => {
+        setItemImage({
+          [event.target.name]: event.target.files[0],
+        });
+    };
+
+    const handleSold=(e)=>{
+        e.preventDefault();
+        alert('item is marked as sold');
+        navigate('/studentdashboard');
+    }
 
     useEffect(() => {
         const itemDtls = itemDetials.find(item => item.id == itemid);//to be replace with api call to backend
@@ -68,8 +82,14 @@ const StudentEditItemDetails = () => {
                             <tr>
                                 <th><label htmlFor="price"><b>Price</b></label></th>
                                 <td>
-                                    <input type="email" name="price" id="price" value={price}  />
+                                    <input type="text" name="price" id="price" value={price}  />
                                 </td>
+                            </tr>
+                            <tr>
+                                <th><label htmlFor="itemImage"><b>Item image</b></label></th>
+                                    <td><input type="file" id="itemImage" name="itemImage" 
+                                        onChange={handleFileChange} required/>
+                                    </td>
                             </tr>
                         </tbody>
                     </table>
@@ -77,7 +97,7 @@ const StudentEditItemDetails = () => {
                 <br />
                 <div className="button-container">
                     <a href='#' className="dashbutton" onClick={(e)=>alert("item details updated successfully.")}>update</a>
-                    <Link to={"/studentdashboard"} className="dashbutton">Back to Dashboard</Link>
+                    <a className="dashbutton" onClick={handleSold}>mark as sold</a>
                 </div>
             </section>
         </div>
