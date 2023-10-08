@@ -11,7 +11,8 @@ const Home = () => {
                 <p> Your Student-to-Student Marketplace</p>
                 <div>
                     <Link  to={"/login"}><button type="button">LOGIN</button></Link>
-                    <button type="button">SIGN UP</button>
+                    <Link to={"/signup"}><button type="button">SIGN UP</button></Link>
+                    
                 </div>
             </div>
         </div>
