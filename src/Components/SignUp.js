@@ -3,7 +3,6 @@ import React from 'react'
 const SignUp = () => {
     document.body.classList.add('home-background');
     return (
-        <div style={{style:'50%'}}>
             <div className="Homemid">
                 <section className="card">
                     <form action="signupconfirmation.html" method="post"><br />
@@ -58,7 +57,6 @@ const SignUp = () => {
                     </form>
                 </section>
             </div>
-        </div>
     )
 }
 
