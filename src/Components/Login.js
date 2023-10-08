@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
+    document.body.classList.remove('dashboard-background');
+    document.body.classList.add('home-background');
 
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');

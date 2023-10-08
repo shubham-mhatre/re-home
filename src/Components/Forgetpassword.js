@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Forgetpassword = () => {
+    document.body.classList.remove('dashboard-background');
+    document.body.classList.add('home-background');
   return (
     <div className="Homemid">
             <section className="card">

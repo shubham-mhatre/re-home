@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 const StudentSearchItem = () => {
+    document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
     const itemDetials = [{
         "id": 1,

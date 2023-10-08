@@ -1,6 +1,7 @@
 import React from 'react'
 
 const SignUp = () => {
+    document.body.classList.remove('dashboard-background');
     document.body.classList.add('home-background');
     return (
             <div className="Homemid">

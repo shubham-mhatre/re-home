@@ -1,6 +1,8 @@
 import React from 'react'
 
 const Services = () => {
+	document.body.classList.remove('dashboard-background');
+	document.body.classList.add('home-background');
   return (
     <div className="about_container">
 		<section className="aboutin">

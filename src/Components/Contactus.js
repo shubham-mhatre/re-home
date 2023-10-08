@@ -1,6 +1,8 @@
 import React from 'react'
 
 const Contactus = () => {
+    document.body.classList.remove('dashboard-background');
+    document.body.classList.add('home-background');
     return (
         <div className="container">
             <section className="card">
@@ -32,7 +34,7 @@ const Contactus = () => {
                             <tr>
                                 <th><label htmlFor="adesc"><b>Comments</b></label></th>
                                 <td>
-                                    <textarea rows="4" cols="60" id="adesc" placeholder="Enter your Comments"></textarea>
+                                    <textarea rows="4" cols="63" id="adesc" placeholder="Enter your Comments"></textarea>
                                 </td>
                             </tr>
                             <tr>
