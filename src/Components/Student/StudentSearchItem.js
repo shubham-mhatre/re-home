@@ -31,6 +31,7 @@ const StudentSearchItem = () => {
             <section className="card">
                 <h2>Search Items</h2>
                 <table className="center">
+                    <tbody>
                     <tr>
                         <th><label htmlFor="name"><b>Name</b></label></th>
                         <td>
@@ -63,11 +64,12 @@ const StudentSearchItem = () => {
                             <br />
                         </td>
                     </tr>
+                </tbody>
                 </table>
                 <br />
                 <h2>Search Results</h2>
                 <table className="ftable">
-                    <thead>
+                    <thead className='bgColorPink'>
                         <tr>
                             <th>Item Name</th>
                             <th>Brand/Model</th>
