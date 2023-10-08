@@ -49,7 +49,7 @@ const StudentDashboard = () => {
                             <div className="item-posting" key={item.id}>
                                 <h3>{item.item}</h3>
                                 <a href="Applicants_Academia.html"><button className="dashbutton">Edit</button></a>
-                                <a href="Job_view.html"><button className="dashbutton">Details</button></a>
+                                <Link to={`/studentitemdetail/${item.id}`}><button className="dashbutton">Details</button></Link>
                             </div>
                         ))}
                     </div>
