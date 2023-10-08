@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const StudentAddItem = () => {
+    document.body.classList.remove('home-background');
+    document.body.classList.add('dashboard-background');
     const [itemName, setItemName] = useState('');
     const [brand, setBrand] = useState('');
     const [type, setType] = useState('');
     const [condition, setCondition] = useState('');
     const [price, setPrice] = useState('');
 
-    const handleSave=(e)=>{
+    const handleSave = (e) => {
         e.preventDefault();
-        if(itemName==="" || brand==="" || type==="" || condition===""||price===""){
+        if (itemName === "" || brand === "" || type === "" || condition === "" || price === "") {
             alert('All fields are required');
-        }else{
+        } else {
             alert('item saved successfully');
         }
-        
+
     }
     return (
         <div className="container">
@@ -55,15 +57,19 @@ const StudentAddItem = () => {
                             <tr>
                                 <th><label htmlFor="type"><b>type</b></label></th>
                                 <td>
-                                    <input
-                                        type="text"
+                                    <select style={{ width: '100%' }}
                                         name="type"
                                         id="type"
-                                        placeholder="Enter type"
                                         value={type}
                                         onChange={(e) => setType(e.target.value)}
                                         required
-                                    />
+                                    >
+                                        <option value="" disabled>Select Type</option>
+                                        {typeData.map(type=>(
+                                        <option value={type.value}>
+                                            {type.text}
+                                        </option>))}
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -105,5 +111,9 @@ const StudentAddItem = () => {
         </div>
     )
 }
+
+const typeData = [{ "value": "Electronic", "text": "Electronic" },
+{ "value": "Furniture", "text": "Furniture" },
+{ "value": "Clothing", "text": "Clothing" }];
 
 export default StudentAddItem

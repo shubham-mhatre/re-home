@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
 
 const StudentItemDetail = () => {
+    document.body.classList.remove('home-background');
+    document.body.classList.add('dashboard-background');
     const { itemid } = useParams();
     const [itemName, setItemName] = useState('');
     const [brand, setBrand] = useState('');
@@ -108,5 +110,9 @@ const itemDetials = [{
     "condition": "Good",
     "price": "80$"
 }];
+
+const typeData = [{ "value": "Electronic", "text": "Electronic" },
+{ "value": "Furniture", "text": "Furniture" },
+{ "value": "Clothing", "text": "Clothing" }];
 
 export default StudentItemDetail

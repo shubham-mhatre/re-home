@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
 
 const StudentEditItemDetails = () => {
+    document.body.classList.remove('home-background');
+    document.body.classList.add('dashboard-background');
     const { itemid } = useParams();
     const [itemName, setItemName] = useState('');
     const [brand, setBrand] = useState('');
@@ -42,7 +44,19 @@ const StudentEditItemDetails = () => {
                             <tr>
                                 <th><label htmlFor="type"><b>type</b></label></th>
                                 <td>
-                                    <input type="text" name="type" id="type" value={type}  />
+                                <select style={{ width: '100%' }}
+                                        name="type"
+                                        id="type"
+                                        value={type}
+                                        onChange={(e) => setType(e.target.value)}
+                                        required
+                                    >
+                                        <option value="" disabled>Select Type</option>
+                                        {typeData.map(type=>(
+                                        <option value={type.value}>
+                                            {type.text}
+                                        </option>))}
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -106,5 +120,9 @@ const itemDetials = [{
     "condition": "Good",
     "price": "80$"
 }];
+
+const typeData = [{ "value": "Electronic", "text": "Electronic" },
+{ "value": "Furniture", "text": "Furniture" },
+{ "value": "Clothing", "text": "Clothing" }];
 
 export default StudentEditItemDetails
