@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 
-const Login = () => {
+const Login = (props) => {
     document.body.classList.remove('dashboard-background');
     document.body.classList.add('home-background');
 
@@ -22,6 +22,7 @@ const Login = () => {
 
         const response=Loginservice.login(formData);
         setLogin(response.isLoggedin);
+        props.onLogin(response.isLoggedin);
         console.log('isLogin'+isLogin);
 
         if(response.isLoggedin){

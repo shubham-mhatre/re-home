@@ -12,16 +12,23 @@ import StudentBookmarkItem from './Components/Student/StudentBookmarkItem';
 import StudentSearchItem from './Components/Student/StudentSearchItem';
 import Forgetpassword from './Components/Forgetpassword';
 import SignUp from './Components/SignUp';
+import { useState } from 'react';
+import Logout from './Components/Logout';
 
 function App() {
+  const[isLogin,setIsLogin]=useState(false);
+  const handleIsLogin =(isLoginFromLoginComponent)=>{
+    setIsLogin(isLoginFromLoginComponent)
+  }
   return (
     <>
       <Router>
-        <Header />
+        <Header isLogin={isLogin}/>
         <Routes>
           <Route path="" element={<Home />}></Route>
           <Route path="/services" element={<Services />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/login" element={<Login onLogin={handleIsLogin}/>}></Route>
+          <Route path="/logout" element={<Logout onLogin={handleIsLogin}/>}></Route>
           <Route path="/about" element={<Aboutus />}></Route>
           <Route path="/contact" element={<Contactus />}></Route>
           <Route path="/studentdashboard" element={<StudentDashboard />}></Route>
