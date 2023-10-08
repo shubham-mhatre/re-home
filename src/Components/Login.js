@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Loginservice from '../Services/LoginService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 
 const Login = () => {
@@ -53,7 +54,7 @@ const Login = () => {
                 <br />
                 <div className="button-container">
                     <a href="Role.html" className="dashbutton">Register</a>
-                    <a href="forgotpass.html" className="dashbutton">Forgot Password</a>
+                    <Link to={"/forgetpassword"} className="dashbutton">Forgot Password</Link>
                 </div>
 
             </section>

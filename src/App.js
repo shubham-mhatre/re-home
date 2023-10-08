@@ -10,6 +10,7 @@ import StudentDashboard from './Components/Student/StudentDashboard';
 import StudentEditprofile from './Components/Student/StudentEditprofile';
 import StudentBookmarkItem from './Components/Student/StudentBookmarkItem';
 import StudentSearchItem from './Components/Student/StudentSearchItem';
+import Forgetpassword from './Components/Forgetpassword';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/studenteditprofile" element={<StudentEditprofile />}></Route>
           <Route path="/studentbookmarkitem" element={<StudentBookmarkItem />}></Route>
           <Route path="/studentsearchitem" element={<StudentSearchItem />}></Route>
+          <Route path="/forgetpassword" element={<Forgetpassword />}></Route>
         </Routes>
       </Router>
 
