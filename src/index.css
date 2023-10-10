@@ -474,3 +474,43 @@ thead
   
     text-align: center;
   }
+
+  .tv-img {
+    flex: 1;
+    background-image: url("../public/Pictures/tv.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+  }
+
+  .stringlights-img {
+    flex: 1;
+    background-image: url("../public/Pictures/stringlights.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+  }
+
+  .bedframe-img {
+    flex: 1;
+    background-image: url("../public/Pictures/bedframe.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+  }
+
+  .microwave-img {
+    flex: 1;
+    background-image: url("../public/Pictures/microwave.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+  }
+
+  .refrigerator-img {
+    flex: 1;
+    background-image: url("../public/Pictures/refrigerator.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+  }

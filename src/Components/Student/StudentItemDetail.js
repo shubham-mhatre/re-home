@@ -11,6 +11,7 @@ const StudentItemDetail = () => {
     const [type, setType] = useState('');
     const [condition, setCondition] = useState('');
     const [price, setPrice] = useState('');
+    const [productImage,setProductImage]=useState('');
 
     useEffect(() => {
         const itemDtls = itemDetials.find(item => item.id == itemid);//to be replace with api call to backend
@@ -20,6 +21,7 @@ const StudentItemDetail = () => {
             setType(itemDtls.type);
             setCondition(itemDtls.condition);
             setPrice(itemDtls.price);
+            setProductImage(itemDtls.image);
         }        
     },[itemid]);
 
@@ -61,6 +63,12 @@ const StudentItemDetail = () => {
                                     <input type="email" name="price" id="price" value={price} readOnly />
                                 </td>
                             </tr>
+                            <tr>
+                                <th><label htmlFor="productImage"><b>Image</b></label></th>
+                                <td>
+                                    <div className={productImage}></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </form>
@@ -80,35 +88,40 @@ const itemDetials = [{
     "brand": "panasonic",
     "type": "Electronic",
     "condition": "Good",
-    "price": "40$"
+    "price": "40$",
+    "image":"microwave-img"
 }, {
     "id": 2,
     'itemName': "Bed Frame",
     "brand": "xylo",
     "type": "Furniture",
     "condition": "Excellent",
-    "price": "50$"
+    "price": "50$",
+    "image":"bedframe-img"
 }, {
     "id": 3,
     'itemName': "String lights",
     "brand": "sonic",
     "type": "Electronic",
     "condition": "Mint",
-    "price": "8$"
+    "price": "8$",
+    "image":"stringlights-img"
 },{
     "id": 4,
     'itemName': "TV",
     "brand": "LG",
     "type": "Electronic",
     "condition": "Good",
-    "price": "60$"
+    "price": "60$",
+    "image":"tv-img"
 },{
     "id": 5,
     'itemName': "refrigerator",
     "brand": "LG",
     "type": "Electronic",
     "condition": "Good",
-    "price": "80$"
+    "price": "80$",
+    "image":"refrigerator-img"
 }];
 
 const typeData = [{ "value": "Electronic", "text": "Electronic" },
