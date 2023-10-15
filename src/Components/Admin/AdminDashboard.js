@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import {
     PieChart,
     Pie,
@@ -36,9 +37,13 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                 </div>
+                <div className="button-container">
+                    <Link to={"/contact"}><button className="dashbutton">Contact us Questions</button></Link>
+                </div>
             </div>
+            
         <br/>
-            <div className="parent">
+            <div className="parent" >
                 <div style={{ textAlign: "center" }}>
                     <h2>item wise purchase request Analysis</h2>
                     <div className="Repo">
