@@ -38,7 +38,7 @@ const AdminDashboard = () => {
                     </div>
                 </div>
                 <div className="button-container">
-                    <Link to={"/contact"}><button className="dashbutton">Contact us Questions</button></Link>
+                    <Link to={"/admincontactus"}><button className="dashbutton">Contact us Questions</button></Link>
                 </div>
             </div>
             
