@@ -20,6 +20,7 @@ import StudentItemDetail from './Components/Student/StudentItemDetail';
 import StudentEditItemDetails from './Components/Student/StudentEditItemDetails';
 import StudentSolditems from './Components/Student/StudentSolditems';
 import AdminContactus from './Components/Admin/AdminContactus';
+import AdminApproveItems from './Components/Admin/AdminApproveItems';
 
 function App() {
   const[isLogin,setIsLogin]=useState(false);
@@ -51,6 +52,7 @@ function App() {
           <Route path="/studentedititemdetail/:itemid" element={<StudentEditItemDetails />}></Route>
           <Route path="/studentsolditems" element={<StudentSolditems />}></Route>
           <Route path="/admincontactus" element={<AdminContactus />}></Route>
+          <Route path="/approveitems" element={<AdminApproveItems />}></Route>
         </Routes>
       </Router>
 
