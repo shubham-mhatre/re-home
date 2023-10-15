@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
 const AdminContactus = () => {
+    document.body.classList.remove('home-background');
+    document.body.classList.add('dashboard-background');
 
     const [email, setEmail] = useState('');
     const [response, setReponse] = useState('');

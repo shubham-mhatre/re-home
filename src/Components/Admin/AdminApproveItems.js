@@ -1,6 +1,8 @@
 import React from 'react'
 
 const AdminApproveItems = () => {
+    document.body.classList.remove('home-background');
+    document.body.classList.add('dashboard-background');
     return (
         <div className="container">
             <section className="card">

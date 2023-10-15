@@ -13,6 +13,8 @@ import {
   } from "recharts";
 
 const AdminDashboard = () => {
+    document.body.classList.remove('home-background');
+    document.body.classList.add('dashboard-background');
     const data = [
         { name: "Microwave", users: 2 },
         { name: "Bed Frame", users: 2 },
