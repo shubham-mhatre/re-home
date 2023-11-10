@@ -1,58 +1,122 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import StudentService from '../../Services/StudentService';
+import { role,backendUrl } from '../../Constants';
 
-const StudentEditItemDetails = () => {
+function StudentEditItemDetails(){
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
-    const { itemid } = useParams();
-    const [itemName, setItemName] = useState('');
-    const [brand, setBrand] = useState('');
-    const [type, setType] = useState('');
-    const [condition, setCondition] = useState('');
-    const [price, setPrice] = useState('');
-    const [itemImage,setItemImage]=useState(null);
+    const { id, itemid } = useParams();
+
+    const [itemDetails, setItemDetails] = useState({
+        itemName:"",
+        brand:"",
+        type:"",
+        condition:"",
+        price:"",
+        itemImage:""
+    });
+
+    
+    useEffect(() => {
+        // Fetch the job details and update the state using the AdminService
+        StudentService.fetchItem(itemid)
+            .then((response) => {
+                console.log(response);
+                const itemData = response.data.phpresult[0]; // Extract the object from the array
+                setItemDetails({
+                    itemName:itemData.ITEM_NAME,
+                    brand:itemData.ITEM_BRAND,
+                    type:itemData.ITEM_TYPE,
+                    condition:itemData.ITEM_CONDITION,
+                    price:itemData.ITEM_PRICE,
+                    itemImage:itemData.ITEM_IMG,
+                });
+                console.log("itemData", itemData);
+            })
+            .catch((error) => {
+                alert("error " + error);
+            });
+    }, []); 
+
+    const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		setItemDetails((prevItemDetails) => ({
+			...prevItemDetails,
+			[name]: value,
+		}));
+	};
+
     const navigate = useNavigate();
 
-    const handleFileChange = (event) => {
-        setItemImage({
-          [event.target.name]: event.target.files[0],
-        });
-    };
-
-    const handleSold=(e)=>{
+    const handleSave = (e) => {
         e.preventDefault();
-        alert('item is marked as sold');
-        navigate('/studentdashboard');
+        const {itemName ,brand ,type ,condition , price , itemImage} = itemDetails;
+        
+
+        const respData={
+            "itemName":itemName,
+            "brand":brand,
+            "type":type,
+            "condition":condition,
+            "price":price,
+            "itemImage":itemImage,
+            "role": role.updateItem,
+            "itemid":itemid
+            
+        }
+
+    StudentService.updateItem(respData)
+        .then((response)=>{
+            console.log(response);
+            alert(response.data);
+           
+        }).catch((error) => {
+            alert("error " + error);
+        });    
+
+}
+
+const handleSold=(e)=>{
+    e.preventDefault();
+        
+
+    const respData={
+       
+        "role": role.markItemasSold,
+        "itemid":itemid
+        
     }
 
-    useEffect(() => {
-        const itemDtls = itemDetials.find(item => item.id == itemid);//to be replace with api call to backend
-        if(itemDtls){
-            setItemName(itemDtls.itemName);
-            setBrand(itemDtls.brand);
-            setType(itemDtls.type);
-            setCondition(itemDtls.condition);
-            setPrice(itemDtls.price);
-        }        
-    },[itemid]);
+    StudentService.markSold(respData)
+    .then((response)=>{
+        console.log(response);
+        alert(response.data);
+       
+    }).catch((error) => {
+        alert("error " + error);
+    });  
+    navigate(`/StudentDashboard/${id}`);
+}
   return (
     <div className="container">
             <section className="card">
-                <form action="signupconfirmation.html" method="post">
+                <form    >
                     <br />
                     <table className="form-group">
                         <tbody>
                             <tr>
                                 <th><label htmlFor="itemName"><b>Item Name</b></label></th>
                                 <td>
-                                    <input type="text" name="itemName" id="itemName" value={itemName}  />
+                                    <input type="text" name="itemName" id="itemName" value={itemDetails.itemName} onChange={handleInputChange}  />
                                 </td>
                             </tr>
                             <tr>
                                 <th><label htmlFor="brand"><b>Brand</b></label></th>
                                 <td>
-                                    <input type="text" name="brand" id="brand" value={brand}  />
+                                    <input type="text" name="brand" id="brand" value={itemDetails.brand}  onChange={handleInputChange} />
                                 </td>
                             </tr>
                             <tr>
@@ -61,8 +125,8 @@ const StudentEditItemDetails = () => {
                                 <select style={{ width: '100%' }}
                                         name="type"
                                         id="type"
-                                        value={type}
-                                        onChange={(e) => setType(e.target.value)}
+                                        value={itemDetails.type}
+                                        onChange={handleInputChange}
                                         required
                                     >
                                         <option value="" disabled>Select Type</option>
@@ -76,19 +140,19 @@ const StudentEditItemDetails = () => {
                             <tr>
                                 <th><label htmlFor="condition"><b>Condition</b></label></th>
                                 <td>
-                                    <input type="text" name="condition" id="condition" value={condition}  />
+                                    <input type="text" name="condition" id="condition" value={itemDetails.condition}  onChange={handleInputChange} />
                                 </td>
                             </tr>
                             <tr>
                                 <th><label htmlFor="price"><b>Price</b></label></th>
                                 <td>
-                                    <input type="text" name="price" id="price" value={price}  />
+                                    <input type="text" name="price" id="price" value={itemDetails.price} onChange={handleInputChange} />
                                 </td>
                             </tr>
                             <tr>
                                 <th><label htmlFor="itemImage"><b>Item image</b></label></th>
                                     <td><input type="file" id="itemImage" name="itemImage" 
-                                        onChange={handleFileChange} required/>
+                                       onChange={handleInputChange} required/>
                                     </td>
                             </tr>
                         </tbody>
@@ -96,9 +160,13 @@ const StudentEditItemDetails = () => {
                 </form>
                 <br />
                 <div className="button-container">
-                    <a href='#' className="dashbutton" onClick={(e)=>alert("item details updated successfully.")}>update</a>
+                    <a href='#' className="dashbutton" onClick={handleSave}>update</a>
                     <a className="dashbutton" onClick={handleSold}>mark as sold</a>
                 </div>
+                <div className="button-container">
+                    <Link to={`/StudentDashboard/${id}`} className="dashbutton">Back to Dashboard</Link>
+                </div>
+
             </section>
         </div>
   )

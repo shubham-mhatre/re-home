@@ -1,61 +1,85 @@
-import React, { useState } from 'react'
-import Loginservice from '../Services/LoginService';
-import { Link, useNavigate } from 'react-router-dom';
+import LoginService from '../Services/LoginService';
+import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { withRouter } from '../withRouter';
 
-
-
-const Login = (props) => {
-    document.body.classList.remove('dashboard-background');
-    document.body.classList.add('home-background');
-
-    const [email,setEmail]=useState('');
-    const [password,setPassword]=useState('');
-    const [isLogin,setLogin]=useState(false);
-    const [role,setRole]=useState('student');
-    const navigate = useNavigate();
-
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        const formData={
-            'email':email,
-            'password':password
+class login extends Component {
+    
+    constructor(props) {
+        super(props)
+      
+        this.state = {
+           email:"",
+           passwrd:"",
+           role:"",
+           id:"",
+           isLogin:false
         }
-
-        const response=Loginservice.login(formData);
-        setLogin(response.isLoggedin);
-        setRole(response.role);
-        props.onLogin(response.isLoggedin,response.role);
-        console.log('isLogin'+isLogin);
-        console.log('role'+role);
-
-        if(response.isLoggedin){
-            if(response.role === "student"){
-                navigate('/studentdashboard');
-            }else{
-                navigate('/admindashboard');
-            }    
-        }else{
-            alert('Invalid credentials');
-        }
+        document.body.classList.remove('dashboard-background');
+         document.body.classList.add('home-background');
+      }
+  
+      LoginBtnClick =(e)=>{
         
-    }
-
+          e.preventDefault();
+          const {email,passwrd}=this.state;
+        //   let isValid=this.validateLoginFormData(email,password);
+        const reqData={
+            email:email,
+            passwrd:passwrd
+        };
+        LoginService.login(reqData)
+        .then((response)=>{
+            console.log(response.data);
+            if(response.data.isLogin =="false"){
+                this.setState({role:"",isLogin:false},
+                ()=>this.props.onLogin(this.state.isLogin));
+                alert('Invalid user credentials');            
+            }else {
+                console.log(response.data);
+                //success login
+                this.setState({role:response.data.role,isLogin:true, id:response.data.id },
+                    ()=>this.props.onLogin(this.state.isLogin)//trigger back
+                );
+              
+            }
+        });
+      }
+  
+   
+      componentDidUpdate(prevProps, prevState) {
+          // Check if the user is logged in and then redirect
+          
+          if (this.state.isLogin && !prevState.isLogin) {
+            if(this.state.role === "Student"){
+                this.props.navigate(`/studentdashboard/${this.state.id}`);
+                
+            }else if(this.state.role === "Admin"){
+                this.props.navigate(`/AdminDashboard`);
+            }else{alert("invalid role")
+                console.log(this.state.role);
+                this.props.navigate('/');
+            }
+        }
+        }
+    render() {
     return (
         <div className="Homemid">
             <section className="card">
                 <h2 className="loginheader">Login</h2>
                 <br/>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={this.LoginBtnClick}>
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
-                        <input type="email" id="email" placeholder="Enter your email" required 
-                        value={email} onChange={e=>setEmail(e.target.value)}/>
+                        <input type="email" id="email"   name="email" placeholder="Enter your email" required 
+                        value={this.state.email} onChange={e=> this.setState({email:e.target.value})}/>
                     </div>
                     <br />
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" placeholder="Enter your password" required 
-                        value={password} onChange={e=>setPassword(e.target.value)}/>
+                        <label htmlFor="passwrd">Password</label>
+                        <input type="password" id="passwrd" name="passwrd" placeholder="Enter your password" required 
+                        value={this.state.passwrd} 
+                        onChange={e=> this.setState({passwrd:e.target.value})} />
                     </div>
                     <br />
                     <br />
@@ -76,4 +100,6 @@ const Login = (props) => {
     )
 }
 
-export default Login
+}
+export default withRouter(login);
+

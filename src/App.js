@@ -1,3 +1,6 @@
+import React, { Component } from 'react';
+
+import { AppUrl } from './Constants';
 import './App.css';
 import Home from './Components/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -5,7 +8,7 @@ import Header from './Components/Header';
 import Services from './Components/Services';
 import Login from './Components/Login';
 import Aboutus from './Components/Aboutus';
-import Contactus from './Components/Contactus';
+import ContactUs from './Components/ContactUs/ContactUs';
 import StudentDashboard from './Components/Student/StudentDashboard';
 import StudentEditprofile from './Components/Student/StudentEditprofile';
 import StudentBookmarkItem from './Components/Student/StudentBookmarkItem';
@@ -22,37 +25,64 @@ import StudentSolditems from './Components/Student/StudentSolditems';
 import AdminContactus from './Components/Admin/AdminContactus';
 import AdminApproveItems from './Components/Admin/AdminApproveItems';
 
-function App() {
-  const[isLogin,setIsLogin]=useState(false);
-  const[role,setRole]=useState('student');
-  const handleIsLogin =(isLoginFromLoginComponent,rolefromLoginComponent)=>{
-    setIsLogin(isLoginFromLoginComponent)
-    setRole(rolefromLoginComponent)
+
+class App extends Component{
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       isLogin:false,
+    }
+    this.handleIsLogin =this.handleIsLogin.bind();
   }
+
+  componentDidMount() {
+    // Retrieve the state from localStorage on component mount
+    const storedState = localStorage.getItem('myComponentState');
+    if (storedState) {
+      this.setState(JSON.parse(storedState));
+    }
+  }
+
+  componentDidUpdate() {
+    // Save the state to localStorage whenever it is updated
+    localStorage.setItem('myComponentState', JSON.stringify(this.state));
+  }
+
+  
+  handleIsLogin=(isLoginFromLoginComponent)=>{//trigger back handling : true return
+    this.setState({isLogin:isLoginFromLoginComponent}) //true
+  }
+  
+  render(){
   return (
     <>
       <Router>
-        <Header isLogin={isLogin} role={role}/>
+        <Header isLogin={this.state.isLogin}/>
         <Routes>
           <Route path="" element={<Home />}></Route>
           <Route path="/services" element={<Services />}></Route>
-          <Route path="/login" element={<Login onLogin={handleIsLogin}/>}></Route>
-          <Route path="/logout" element={<Logout onLogin={handleIsLogin}/>}></Route>
+          <Route path={AppUrl.login} element={<Login onLogin={this.handleIsLogin}/>}></Route>
+          <Route path={AppUrl.Logout} element={<Logout onLogin={this.handleIsLogin}/>}></Route>
+         
           <Route path="/about" element={<Aboutus />}></Route>
-          <Route path="/contact" element={<Contactus />}></Route>
-          <Route path="/studentdashboard" element={<StudentDashboard />}></Route>
-          <Route path="/studenteditprofile" element={<StudentEditprofile />}></Route>
-          <Route path="/studentbookmarkitem" element={<StudentBookmarkItem />}></Route>
-          <Route path="/studentsearchitem" element={<StudentSearchItem />}></Route>
+          <Route path={AppUrl.contactUs} element={<ContactUs/>}></Route>
+          <Route path="/StudentDashboard/:id" element={<StudentDashboard />}></Route>
+          <Route path="/studenteditprofile/:id" element={<StudentEditprofile />}></Route>
+          <Route path="/studentbookmarkitem/:id" element={<StudentBookmarkItem />}></Route>
+          <Route path="/studentsearchitem/:id" element={<StudentSearchItem />}></Route>
           <Route path="/forgetpassword" element={<Forgetpassword />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path={AppUrl.signUp} element={<SignUp/>}></Route>
+          <Route path="/studentadditem/:id" element={<StudentAddItem />}></Route>
+          <Route path="/studentitemdetail/:id/:itemid" element={<StudentItemDetail />}></Route>
+          <Route path="/studentedititemdetail/:id/:itemid" element={<StudentEditItemDetails />}></Route>
+          <Route path="/studentsolditems/:id" element={<StudentSolditems />}></Route>
+
+
           <Route path="/admindashboard" element={<AdminDashboard />}></Route>
-          <Route path="/studentadditem" element={<StudentAddItem />}></Route>
-          <Route path="/studentitemdetail/:itemid" element={<StudentItemDetail />}></Route>
-          <Route path="/studentedititemdetail/:itemid" element={<StudentEditItemDetails />}></Route>
-          <Route path="/studentsolditems" element={<StudentSolditems />}></Route>
           <Route path="/admincontactus" element={<AdminContactus />}></Route>
           <Route path="/approveitems" element={<AdminApproveItems />}></Route>
+       
         </Routes>
       </Router>
 
@@ -60,4 +90,5 @@ function App() {
   );
 }
 
+}
 export default App;

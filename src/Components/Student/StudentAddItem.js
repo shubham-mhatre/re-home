@@ -1,29 +1,69 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import StudentService from '../../Services/StudentService';
+import { role,backendUrl } from '../../Constants';
 
 const StudentAddItem = () => {
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
-    const [itemName, setItemName] = useState('');
-    const [brand, setBrand] = useState('');
-    const [type, setType] = useState('');
-    const [condition, setCondition] = useState('');
-    const [price, setPrice] = useState('');
-    const [itemImage,setItemImage]=useState(null);
+    const { id } = useParams();
+    const [itemDetails, setItemDetails] = useState({
+        itemName:"",
+        brand:"",
+        type:"",
+        condition:"",
+        price:"",
+        itemImage:""
+    });
+  
 
-    const handleFileChange = (event) => {
-        setItemImage({
+   /* const handleFileChange = (event) => {
+        setItemDetails.itemImage({
           [event.target.name]: event.target.files[0],
         });
-    };
+    };*/
+
+    const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		setItemDetails((prevItemDetails) => ({
+			...prevItemDetails,
+			[name]: value,
+		}));
+	};
 
     const handleSave = (e) => {
         e.preventDefault();
-        if (itemName === "" || brand === "" || type === "" || condition === "" || price === ""|| itemImage===null) {
-            alert('All fields are required');
-        } else {
-            alert('item saved successfully');
+        const {itemName ,brand ,type ,condition , price , itemImage} = itemDetails;
+        
+
+        const respData={
+            "itemName":itemName,
+            "brand":brand,
+            "type":type,
+            "condition":condition,
+            "price":price,
+            "itemImage":itemImage,
+            "role": role.addItem,
+            
         }
+    
+    StudentService.Postitem(respData)
+		  .then((response)=>{
+			  console.log(response);
+			  alert(response.data);
+			  setItemDetails({
+                itemName: "",
+                brand: "",
+                type: "",
+                condition: "",
+                price: "",
+                itemImage: ""
+            });
+		  }).catch((error) => {
+			  alert("error " + error);
+		  });  
+  
 
     }
     return (
@@ -41,8 +81,8 @@ const StudentAddItem = () => {
                                         name="itemName"
                                         id="itemName"
                                         placeholder="Enter Item Name"
-                                        value={itemName}
-                                        onChange={(e) => setItemName(e.target.value)}
+                                        value={itemDetails.itemName}
+                                        onChange={handleInputChange}
                                         required
                                     />
                                 </td>
@@ -55,8 +95,8 @@ const StudentAddItem = () => {
                                         name="brand"
                                         id="brand"
                                         placeholder="Enter Brand name"
-                                        value={brand}
-                                        onChange={(e) => setBrand(e.target.value)}
+                                        value={itemDetails.brand}
+                                        onChange={handleInputChange}
                                         required
                                     />
                                 </td>
@@ -67,13 +107,13 @@ const StudentAddItem = () => {
                                     <select style={{ width: '100%' }}
                                         name="type"
                                         id="type"
-                                        value={type}
-                                        onChange={(e) => setType(e.target.value)}
+                                        value={itemDetails.type}
+                                        onChange={handleInputChange}
                                         required
                                     >
                                         <option value="" disabled>Select Type</option>
                                         {typeData.map(type=>(
-                                        <option value={type.value}>
+                                        <option key={type.value} value={type.value}>
                                             {type.text}
                                         </option>))}
                                     </select>
@@ -87,8 +127,8 @@ const StudentAddItem = () => {
                                         name="condition"
                                         id="condition"
                                         placeholder="Enter Condition"
-                                        value={condition}
-                                        onChange={(e) => setCondition(e.target.value)}
+                                        value={itemDetails.condition}
+                                        onChange={handleInputChange}
                                     />
                                 </td>
                             </tr>
@@ -100,16 +140,16 @@ const StudentAddItem = () => {
                                         name="price"
                                         id="price"
                                         placeholder="Enter price"
-                                        value={price}
-                                        onChange={(e) => setPrice(e.target.value)}
+                                        value={itemDetails.price}
+                                        onChange={handleInputChange}
                                         required
                                     />
                                 </td>
                             </tr>
                             <tr>
                                 <th><label htmlFor="itemImage"><b>Item image</b></label></th>
-                                    <td><input type="file" id="itemImage" name="itemImage" 
-                                        onChange={handleFileChange} required/>
+                                    <td><input type="file" id="itemImage" name="itemImage"  value={itemDetails.itemImage}
+                                        onChange={handleInputChange} required/>
                                     </td>
                             </tr>
                         </tbody>
@@ -118,7 +158,7 @@ const StudentAddItem = () => {
                 <br />
                 <div className="button-container">
                     <a href="#" className="dashbutton" onClick={handleSave}>Save</a>
-                    <Link to={"/studentdashboard"} className="dashbutton">Back to Dashboard</Link>
+                    <Link to={`/StudentDashboard/${id}`} className="dashbutton">Back to Dashboard</Link>
                 </div>
             </section>
         </div>

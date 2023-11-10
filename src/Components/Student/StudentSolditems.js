@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { withRouter } from '../../withRouter';
+import StudentService from '../../Services/StudentService';
+import { role,backendUrl } from '../../Constants';
 
 
-const StudentSolditems = () => {
+function StudentSolditems(){
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
+    const { id } = useParams();
+
+    const [itemDetails, setItemDetails] = useState([]);
+
+
+    useEffect(() => {
+        // Fetch the job details and update the state using the AdminService
+        StudentService.fetchSoldItem(id)
+            .then((response) => {
+                console.log(response);
+                setItemDetails(response.data.phpresult);
+            })
+            .catch((error) => {
+                alert("error " + error);
+            });
+    }, [id]); 
+    
     return (
         <div className='card'>
             <table className="ftable">
@@ -19,46 +40,28 @@ const StudentSolditems = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {itemDetials.map((items) => (
-                        <tr key={items.id}>
-                            <td>{items.itemName}</td>
-                            <td>{items.brand}</td>
-                            <td>{items.type}</td>
-                            <td>{items.condition}</td>
-                            <td>{items.price}</td>
+                    {itemDetails.map((items) => (
+                        <tr key={items.ITEM_ID}>
+                            <td>{items.ITEM_NAME}</td>
+                            <td>{items.ITEM_BRAND}</td>
+                            <td>{items.ITEM_TYPE}</td>
+                            <td>{items.ITEM_CONDITION}</td>
+                            <td>{items.ITEM_PRICE}</td>
                             <td>
                                 <div className="button-container">
-                                    <Link to={`/studentitemdetail/${items.id}`} className="dashbutton">Details</Link>
+                                    <Link to={`/studentitemdetail/${id}/${items.ITEM_ID}`} className="dashbutton">Details</Link>
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <div className="button-container">
+                    <Link to={`/StudentDashboard/${id}`} className="dashbutton">Back to Dashboard</Link>
+                </div>
         </div>
+        
     )
 }
 
-const itemDetials = [{
-    "id": 1,
-    'itemName': "Microwave",
-    "brand": "panasonic",
-    "type": "Electronic",
-    "condition": "Good",
-    "price": "40$"
-}, {
-    "id": 2,
-    'itemName': "Bed Frame",
-    "brand": "xylo",
-    "type": "Furniture",
-    "condition": "Excellent",
-    "price": "50$"
-}, {
-    "id": 3,
-    'itemName': "String lights",
-    "brand": "sonic",
-    "type": "Electronic",
-    "condition": "Mint",
-    "price": "8$"
-}];
 export default StudentSolditems

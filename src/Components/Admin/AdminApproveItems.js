@@ -1,8 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import AdminService from '../../Services/AdminService';
+import { role,backendUrl } from '../../Constants';
+
+import { Link } from 'react-router-dom';
+
+
 
 const AdminApproveItems = () => {
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
+    const [itemDetails, setItemDetails] = useState([]);
+
+    useEffect(() => {
+        AdminService.fetchAllItem()
+            .then((response) => {
+                console.log(response);
+                setItemDetails(response.data.phpresult);
+            })
+            .catch((error) => {
+                alert("error " + error);
+            });
+    }, []); 
+
+    const handleAccept=(jid)=>{
+            alert('You have acceptted the job!');
+                    const resdata = {                    
+                        "role": role.acceptItem,
+                        "jid": jid
+                    };
+                    AdminService.AcceptItem(resdata)
+                    .then((response)=>{
+                        console.log(response);						
+                    }).catch((error) => {
+                        alert("error " + error);
+                    });
+
+
+    };
+     
+    const handleDecline=(jid)=> {
+        alert(`Declined job position `);
+        const resdata = {                    
+            "role": role.declineItem,
+            "jid": jid
+        };
+        AdminService.DeclineItem(resdata)
+        .then((response)=>{
+            console.log(response);						
+        }).catch((error) => {
+            alert("error " + error);
+        });
+    };
+
     return (
         <div className="container">
             <section className="card">
@@ -20,55 +69,36 @@ const AdminApproveItems = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {itemDetials.map((items) => (
-                            <tr key={items.id}>
-                                <td>{items.itemName}</td>
-                                <td>{items.brand}</td>
-                                <td>{items.type}</td>
-                                <td>{items.condition}</td>
-                                <td>{items.price}</td>
+                        {itemDetails.map((items) => (
+                            <tr key={items.ITEM_ID}>
+                            <td>{items.ITEM_NAME}</td>
+                            <td>{items.ITEM_BRAND}</td>
+                            <td>{items.ITEM_TYPE}</td>
+                            <td>{items.ITEM_CONDITION}</td>
+                            <td>{items.ITEM_PRICE}</td>
                                 <td>
                                     <div className="button-container">
                                         <button className="dashbutton"
-                                        onClick={()=>alert('product request accepted')}>Accept</button>
+                                        onClick={() => handleAccept(items.ITEM_ID)}>Accept</button>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="button-container">
                                         <button className="dashbutton"
-                                         onClick={()=>alert('product request declined')}>Decline</button>
+                                         onClick={() => handleDecline(items.ITEM_ID)}>Decline</button>
                                     </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <div className="button-container">
+                    <Link to={`/AdminDashboard`} className="dashbutton">Back to Dashboard</Link>
+                </div>
             </section>
         </div>
     )
 }
 
-const itemDetials = [{
-    "id": 1,
-    'itemName': "Microwave",
-    "brand": "panasonic",
-    "type": "Electronic",
-    "condition": "Good",
-    "price": "40$"
-}, {
-    "id": 2,
-    'itemName': "Bed Frame",
-    "brand": "xylo",
-    "type": "Furniture",
-    "condition": "Excellent",
-    "price": "50$"
-}, {
-    "id": 3,
-    'itemName': "String lights",
-    "brand": "sonic",
-    "type": "Electronic",
-    "condition": "Mint",
-    "price": "8$"
-}];
 
 export default AdminApproveItems

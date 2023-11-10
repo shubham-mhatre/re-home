@@ -1,65 +1,126 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import StudentService from '../../Services/StudentService';
+import StudentpurchaseService from '../../Services/StudentpurchaseService';
+import { role,backendUrl } from '../../Constants';
 
+function StudentSearchItem(){
 
-const StudentSearchItem = () => {
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
-    const [type, setType] = useState('');
+    const { id } = useParams();
+    const [type, setType] = useState([]);
+    const [itemDetails, setitemDetails] = useState([]);
+   
+    const [searchDetails, setSearchDetails] = useState({
+        itemName: '',
+        itemtype:''
+       
+    });
 
-    const handleBookmarkItem=(e)=>{
-        alert("item bookmarked successfully");
+      const handleSearch = (event) => {
+		event.preventDefault();
+		const { itemName, itemtype  } = searchDetails;
+		
+		const checknullitemName = itemName ? itemName : '';
+		const checknullitemType = itemtype ? itemtype : '';
+		console.log("checknullitemName",checknullitemName);
+         console.log(checknullitemType);
+			
+			StudentService.getFilterItems(checknullitemName,checknullitemType)
+			.then((response)=>{
+				console.log(response);
+                setitemDetails(response.data.phpresult);
+                
+			}).catch((error) => {
+				alert("error " + error);      
+			});
+	  };
+
+    const handleBookmarkItem=(itemid,id)=>{
+       
+        const respData={
+           
+            "role": role.markItemasBookmark,
+            "itemid":itemid,
+            "id":id
+            
+        }
+    
+        StudentService.markBookmark(respData)
+        .then((response)=>{
+            console.log(response);
+            alert(response.data);
+           
+        }).catch((error) => {
+            alert("error " + error);
+        });
     }
 
-    const handlePurchaseRequest=(e)=>{
-        alert("purchase requested submitted to owner");
+    const handlePurchaseRequest=(itemname,itemid)=>{
+        const respData={
+            "itemid":itemid,
+            "itemname":itemname,
+            "id":id
+            
+        }
+        StudentpurchaseService.requestForPurchase(respData)
+        .then((resp)=>{
+            console.log(JSON.stringify(resp));
+            alert(itemid);
+            alert(resp.data.message);
+        }).catch((error)=>{
+            alert(error);
+        });
+        //alert("purchase requested submitted to owner");
     }
     
     return (
         <div className="container">
             <section className="card">
                 <h2>Search Items</h2>
-                <table className="center">
-                    <tbody>
-                    <tr>
-                        <th><label htmlFor="name"><b>Name</b></label></th>
-                        <td>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                required
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label htmlFor="type"><b>Type</b></label></th>
-                        <td>
-                        <select style={{ width: '100%' }}
-                            name="type"
-                            id="type"
-                            value={type}
-                            onChange={(e) => setType(e.target.value)}
-                        required>
-                            <option value="" disabled>Select Type</option>
-                            {typeData.map(type=>(
-                            <option value={type.value}>{type.text}</option>))}
-                        </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colSpan="2">
-                            <div className="form-group">
-                                <input
-                                    type="submit"
-                                    value="Search Available Items"
-                                />
-                            </div>
-                            <br />
-                        </td>
-                    </tr>
-                </tbody>
-                </table>
+                <form onSubmit={handleSearch}>	
+                    <table className="center">
+                        <tbody>
+                        <tr>
+                            <th><label htmlFor="itemName"><b>Name</b></label></th>
+                            <td>
+                                <input  type="text" name="itemName" id="itemName"
+                                 value={searchDetails.itemName} 
+							onChange={(e) => setSearchDetails({ ...searchDetails, itemName: e.target.value })}  />
+                            </td>
+                        </tr>                         
+
+                            <tr>
+                                <th><label><b>Type</b></label></th>
+                                <td>
+                                    {typeData.map(type => (
+                                        <div key={type.value}>
+                                            <input
+                                                type="radio"
+                                                id={type.value}
+                                                name="type"
+                                                value={type.value}
+                                                checked={searchDetails.itemtype === type.value}
+                                                onChange={(e) => setSearchDetails({ ...searchDetails, itemtype: e.target.value })}
+                                            />
+                                            <label htmlFor={type.value}>{type.text}</label>
+                                        </div>
+                                    ))}
+                                </td>
+                            </tr>
+                        <tr>
+                            <td colSpan="2">
+                                <div className="form-group">
+                                      <button type="submit" className="button" >Search Available Items</button>                                    
+                                </div>
+                                <br />
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </form>
                 <br />
                 <h2>Search Results</h2>
                 <table className="ftable">
@@ -76,26 +137,26 @@ const StudentSearchItem = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {itemDetials.map((items) => (
-                            <tr key={items.id}>
-                                <td>{items.itemName}</td>
-                                <td>{items.brand}</td>
-                                <td>{items.type}</td>
-                                <td>{items.condition}</td>
-                                <td>{items.price}</td>
-                                <td>
+                        {itemDetails.map((items) => (
+                           <tr key={items.ITEM_ID}>
+                           <td>{items.ITEM_NAME}</td>
+                           <td>{items.ITEM_BRAND}</td>
+                           <td>{items.ITEM_TYPE}</td>
+                           <td>{items.ITEM_CONDITION}</td>
+                           <td>{items.ITEM_PRICE}</td>
+                           <td>
                                     <div className="button-container">
-                                        <Link to={`/studentitemdetail/${items.id}`} className="dashbutton">Details</Link>
+                                        <Link to={`/studentitemdetail/${id}/${items.ITEM_ID}`} className="dashbutton">Details</Link>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="button-container">
-                                        <a className="dashbutton" onClick={handleBookmarkItem}>Bookmark</a>
+                                        <a className="dashbutton" onClick={()=>handleBookmarkItem(items.ITEM_ID,id)}>Bookmark</a>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="button-container">
-                                        <a className="dashbutton" onClick={handlePurchaseRequest}>Purchase Request</a>
+                                        <a className="dashbutton" onClick={()=>handlePurchaseRequest(items.ITEM_NAME,items.ITEM_ID,id)}>Purchase Request</a>
                                     </div>
                                 </td>
                             </tr>
@@ -104,37 +165,13 @@ const StudentSearchItem = () => {
                 </table>
 
                 <div className="button-container">
-                    <Link to={"/studentdashboard"} className="dashbutton">
-                        Back to Dashboard
-                    </Link>
+                    <Link to={`/StudentDashboard/${id}`} className="dashbutton">Back to Dashboard</Link>
                 </div>
             </section>
         </div>
     )
 }
 
-const itemDetials = [{
-    "id": 1,
-    'itemName': "Microwave",
-    "brand": "panasonic",
-    "type": "Electronic",
-    "condition": "Good",
-    "price": "40$"
-}, {
-    "id": 2,
-    'itemName': "Bed Frame",
-    "brand": "xylo",
-    "type": "Furniture",
-    "condition": "Excellent",
-    "price": "50$"
-}, {
-    "id": 3,
-    'itemName': "String lights",
-    "brand": "sonic",
-    "type": "Electronic",
-    "condition": "Mint",
-    "price": "8$"
-}];
 const typeData = [{ "value": "Electronic", "text": "Electronic" },
 { "value": "Furniture", "text": "Furniture" },
 { "value": "Clothing", "text": "Clothing" }];

@@ -1,38 +1,97 @@
-import React,{useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { withRouter } from '../../withRouter';
+import { useParams } from 'react-router-dom';
+import StudentService from '../../Services/StudentService';
+import { role } from "../../Constants";
 
 
-const StudentEditprofile = () => {
+function StudentEditprofile(){
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
     
-    const [mavId, setMavId] = useState('6829897050');
-    const [name, setName] = useState('Harold XYZ Godwinson');
-    const [phone, setPhone] = useState('6829897050');
-    const [address, setAddress] = useState('1006 Greek Row');
-    const [email, setEmail] = useState('Harold@gmail.com');
-    const [password, setPassword] = useState('*******');
+    const { id } = useParams();
+    const [userDetails, setUserDetails] = useState({
+        mavid:"",
+        uname:"",
+        phoneno:"",
+        address:"",
+        email:"",
+        passwrd:"",
+    });
+    
+    useEffect(() => {
+        StudentService.updateStudentProfile(id)
+                .then((response) => {
+                    console.log(response);
+                    const userData = response.data.phpresult[0];
+                    setUserDetails({
+                            mavid: userData.mavid,
+                            uname: userData.uname,
+                            phoneno: userData.phoneno,
+                            address: userData.address,
+                            email:userData.email,
+                            passwrd:userData.passwrd
+                    
+                    });
+                    console.log("userDetails", userData);
+                })
+                .catch((error) => {
+                    alert("error " + error);
+                });
+        }, [id]); 
 
-    const handleProdileUpdate=(e)=>{
-        alert("profile updated successfully");
-    }
+
+        const handleChange = (event) => {
+            const { name, value } = event.target;
+            setUserDetails((prevProfileDetails) => ({
+                ...prevProfileDetails,
+                [name]: value,
+            }));
+        };
+        const  handleSubmit=(e)=>{
+            e.preventDefault();
+            const {  mavid, email, uname, phoneno,address,passwrd } = userDetails;
+            console.log(userDetails);
+            
+            
+            const respData = {
+                "mavid":mavid,
+                "email":email,
+                "uname":uname,
+                "phoneno":phoneno,
+                "address": address,     
+                "passwrd":passwrd,                    
+                "role": role.StudentProfilechange,
+                 "id":id
+            };
+    
+            StudentService.changedetailsofStudentProfile(respData)
+                .then((response)=>{
+                    console.log(response);
+                    alert(response.data);
+                    
+                }).catch((error) => {
+                    alert("error " + error);
+                });  
+  }
   return (
     <div className="container">
             <section className="card">
-                <form action="signupconfirmation.html" method="post">
+                <form onSubmit={handleSubmit}>
                     <br />
                     <table className="form-group">
                         <tbody>
                             <tr>
-                                <th><label htmlFor="mavId"><b>Student ID</b></label></th>
+                                <th><label htmlFor="mavid"><b>Student ID</b></label></th>
                                 <td>
                                     <input
                                         type="text"
-                                        name="mavId"
-                                        id="mavId"
+                                        name="mavid"
+                                        id="mavid"
                                         placeholder="Enter your MavId"
-                                        value={mavId}
-                                        onChange={(e) => setMavId(e.target.value)}
+                                        value={userDetails.mavid}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </td>
@@ -45,8 +104,8 @@ const StudentEditprofile = () => {
                                         name="uname"
                                         id="uname"
                                         placeholder="Enter your name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        value={userDetails.uname}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </td>
@@ -59,8 +118,8 @@ const StudentEditprofile = () => {
                                         name="phoneno"
                                         id="phoneno"
                                         placeholder="Enter your phone number"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
+                                        value={userDetails.phoneno}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </td>
@@ -73,48 +132,57 @@ const StudentEditprofile = () => {
                                         name="address"
                                         id="address"
                                         placeholder="Enter your current address"
-                                        value={address}
-                                        onChange={(e) => setAddress(e.target.value)}
+                                        value={userDetails.address}
+                                        onChange={handleChange}
                                     />
                                 </td>
                             </tr>
                             <tr>
-                                <th><label htmlFor="username"><b>Email</b></label></th>
+                                <th><label htmlFor="email"><b>Email</b></label></th>
                                 <td>
                                     <input
                                         type="email"
-                                        name="username"
-                                        id="username"
+                                        name="email"
+                                        id="email"
                                         placeholder="Enter email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={userDetails.email}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </td>
                             </tr>
                             <tr>
-                                <th><label htmlFor="password"><b>Password</b></label></th>
+                                <th><label htmlFor="passwrd"><b>Password</b></label></th>
                                 <td>
                                     <input
                                         type="password"
-                                        name="password"
-                                        id="password"
+                                        name="passwrd"
+                                        id="passwrd"
                                         placeholder="Enter Password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={userDetails.passwrd}
+                                        onChange={handleChange}
                                         required
                                     />
                                     <br />
                                 </td>
                             </tr>
+                            <tr>
+                                        <td colSpan="2">
+                                            <div className="button-container center-button">
+                                                <button type="submit"className="button">save</button>
+                                            </div>
+                                            <br />
+                                        </td>
+                                    </tr>
                         </tbody>
                     </table>
-                </form>
+                    </form>
                 <br />
                 <div className="button-container">
-                    <a className="dashbutton" onClick={handleProdileUpdate}>Save</a>
-                    <Link to={"/studentdashboard"} className="dashbutton">Back to Dashboard</Link>
+                    <Link to={`/StudentDashboard/${id}`} className="dashbutton">Back to Dashboard</Link>
                 </div>
+
+                
             </section>
         </div>
   )

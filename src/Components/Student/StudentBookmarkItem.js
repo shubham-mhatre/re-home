@@ -1,32 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
+import StudentService from '../../Services/StudentService';
 
 const StudentBookmarkItem = () => {
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
-    const itemDetials = [{
-        "id": 1,
-        'itemName': "Microwave",
-        "brand": "panasonic",
-        "type": "Electronic",
-        "condition": "Good",
-        "price": "40$"
-    }, {
-        "id": 2,
-        'itemName': "Bed Frame",
-        "brand": "xylo",
-        "type": "Furniture",
-        "condition": "Excellent",
-        "price": "50$"
-    }, {
-        "id": 3,
-        'itemName': "String lights",
-        "brand": "sonic",
-        "type": "Electronic",
-        "condition": "Mint",
-        "price": "8$"
-    }];
+    const { id } = useParams();
+
+    const [itemDetails, setItemDetails] = useState([]);
+
+    
+    useEffect(() => {
+        // Fetch the job details and update the state using the AdminService
+        StudentService.fetchBookmarkItem(id)
+            .then((response) => {
+                console.log(response);
+                setItemDetails(response.data.phpresult);
+            })
+            .catch((error) => {
+                alert("error " + error);
+            });
+    }, [id]); 
+
     return (
         <div className="container">
             <section className="card">
@@ -43,16 +39,16 @@ const StudentBookmarkItem = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {itemDetials.map((items) => (
-                            <tr key={items.id}>
-                                <td>{items.itemName}</td>
-                                <td>{items.brand}</td>
-                                <td>{items.type}</td>
-                                <td>{items.condition}</td>
-                                <td>{items.price}</td>
-                                <td>
+                        {itemDetails.map((items) => (
+                             <tr key={items.ITEM_ID}>
+                             <td>{items.ITEM_NAME}</td>
+                             <td>{items.ITEM_BRAND}</td>
+                             <td>{items.ITEM_TYPE}</td>
+                             <td>{items.ITEM_CONDITION}</td>
+                             <td>{items.ITEM_PRICE}</td>
+                             <td>
                                     <div className="button-container">
-                                        <Link to={`/studentitemdetail/${items.id}`} className="dashbutton">Details</Link>
+                                           <Link to={`/studentitemdetail/${id}/${items.ITEM_ID}`} className="dashbutton">Details</Link>
                                     </div>
                                 </td>
                             </tr>
@@ -61,7 +57,7 @@ const StudentBookmarkItem = () => {
                 </table>
 
                 <div className="button-container">
-                    <Link to={"/studentdashboard"} className="dashbutton">Back to Dashboard</Link>
+                      <Link to={`/StudentDashboard/${id}`} className="dashbutton">Back to Dashboard</Link>
                 </div>
             </section>
         </div>
