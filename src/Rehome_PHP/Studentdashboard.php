@@ -31,19 +31,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $condition = $requestData['condition'];
       $price=$requestData['price'];
       $itemImage=$requestData['itemImage'];
-      //$id=$requestData['id'];
-      $id=7;
+      $id=$requestData['id']; 
 
-       $sql = "INSERT INTO add_items(ITEM_NAME, ITEM_BRAND, ITEM_TYPE, ITEM_CONDITION, ITEM_PRICE,ITEM_IMG,ID) 
-       VALUES ('$itemName', '$brand','$type','$condition','$price','$itemImage','$id')";
-
-       if ($conn->query($sql) === TRUE) {
+      // $sql = "INSERT INTO add_items(ITEM_NAME, ITEM_BRAND, ITEM_TYPE, ITEM_CONDITION, ITEM_PRICE,ITEM_IMG,ID) 
+       //VALUES ('$itemName', '$brand','$type','$condition','$price','$itemImage','$id')";
+       $sql = "INSERT INTO add_items (ITEM_NAME, ITEM_BRAND, ITEM_TYPE, ITEM_CONDITION, ITEM_PRICE, ITEM_IMG, ID) 
+       VALUES (?, ?, ?, ?, ?, ?, ?)";
+      /* if ($conn->query($sql) === TRUE) {
         echo "Item posted successfully.";
         return json_encode(['message' => 'Item posted successfully.']);
       } else {
         echo "Error: " . $sql . " " . $conn->error;
         return "Error: " . $sql . " " . $conn->error;
+      }*/
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("ssssssi", $itemName, $brand, $type, $condition, $price, $itemImage, $id);
+     
+      if ($stmt->execute()) {
+          echo "Item posted successfully.";
+          echo json_encode(['message' => 'Item posted successfully.']);
+      } else {
+          echo "Error: " . $stmt->error;
+          echo json_encode(['error' => "Error: " . $stmt->error]);
       }
+
+
     }
     elseif($role === "StudentProfilechange"){
       $id=$requestData['id'];
@@ -123,6 +135,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               return json_encode(['message' => 'Item already marked as bookmark.']);
           }
   }
+  elseif($role === "deleteItem"){
+
+    $itemid=$requestData['itemid'];
+
+     $sql = "Delete from  add_items WHERE ITEM_ID= $itemid";
+     
+
+     if ($conn->query($sql) === TRUE) {
+      echo "Item deleted successfully.";
+      return json_encode(['message' => 'Item deleted successfully.']);
+    } else {
+      echo "Error: " . $sql . " " . $conn->error;
+      return "Error: " . $sql . " " . $conn->error;
+    }
+  }
+
+
 
 }elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
     $role = $_GET['role'];
@@ -169,8 +198,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $json_data=array();
           while ($row = mysqli_fetch_assoc($mysqli)) {
                 // Convert BLOB data to base64 encoded string
-                $imageData = base64_encode($row['ITEM_IMG']);
-                $row['ITEM_IMG'] = 'data:image/png;base64,' . $imageData; // Add data URL prefix
+                //$imageData = base64_encode($row['ITEM_IMG']);
+                //$row['ITEM_IMG'] = 'data:image/png;base64,' . $imageData; // Add data URL prefix
                 $json_data[] = $row;
         }
     

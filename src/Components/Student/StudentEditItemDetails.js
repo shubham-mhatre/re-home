@@ -78,6 +78,22 @@ function StudentEditItemDetails(){
         });    
 
 }
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setItemDetails((prevItemDetails) => ({
+          ...prevItemDetails,
+          itemImage: reader.result,
+        }));
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
 const handleSold=(e)=>{
     e.preventDefault();
@@ -91,6 +107,28 @@ const handleSold=(e)=>{
     }
 
     StudentService.markSold(respData)
+    .then((response)=>{
+        console.log(response);
+        alert(response.data);
+       
+    }).catch((error) => {
+        alert("error " + error);
+    });  
+    navigate(`/StudentDashboard/${id}`);
+}
+
+const handleDelete=(e)=>{
+    e.preventDefault();
+        
+
+    const respData={
+       
+        "role": role.deleteItem,
+        "itemid":itemid
+        
+    }
+
+    StudentService.markDelete(respData)
     .then((response)=>{
         console.log(response);
         alert(response.data);
@@ -152,7 +190,7 @@ const handleSold=(e)=>{
                             <tr>
                                 <th><label htmlFor="itemImage"><b>Item image</b></label></th>
                                     <td><input type="file" id="itemImage" name="itemImage" 
-                                       onChange={handleInputChange} required/>
+                                       onChange={handleFileChange} required/>
                                     </td>
                             </tr>
                         </tbody>
@@ -160,8 +198,9 @@ const handleSold=(e)=>{
                 </form>
                 <br />
                 <div className="button-container">
-                    <a href='#' className="dashbutton" onClick={handleSave}>update</a>
-                    <a className="dashbutton" onClick={handleSold}>mark as sold</a>
+                    <a href='#' className="dashbutton" onClick={handleSave}>Update</a>
+                    <a className="dashbutton" onClick={handleSold}>Mark as sold</a>
+                    <a className="dashbutton" onClick={handleDelete}>Delete</a>
                 </div>
                 <div className="button-container">
                     <Link to={`/StudentDashboard/${id}`} className="dashbutton">Back to Dashboard</Link>

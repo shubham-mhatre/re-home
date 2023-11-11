@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Footer from '../Footer/Footer'
 import ContactusService from '../../Services/ContactusService';
 
 export default class ContactUs extends Component {
@@ -109,7 +108,7 @@ export default class ContactUs extends Component {
                     <section  style={{ textAlign: 'center' }}>
                              <h3 style={{ textAlign: 'center' }}>Reach out to:</h3>
                               <p style={{ alignSelf: 'center' }}>Phone: (682)-286-9981<br />
-                              Mail to us at: <a href="mailto:ReHome@gmail.com">ReHome@gmail.com</a></p><br /><br />
+                              Mail to us at: <a href="mailto:ReHome@gmail.com">ReHomeGrp28@gmail.com</a></p><br /><br />
                      </section>
                 </div>
             </div>

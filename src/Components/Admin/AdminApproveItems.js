@@ -23,7 +23,7 @@ const AdminApproveItems = () => {
     }, []); 
 
     const handleAccept=(jid)=>{
-            alert('You have acceptted the job!');
+            alert('You have accepted the item.');
                     const resdata = {                    
                         "role": role.acceptItem,
                         "jid": jid

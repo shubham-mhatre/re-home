@@ -35,7 +35,6 @@ $rawData = file_get_contents("php://input");
 
             $rowdata = $resultmysql->fetch_assoc();
             $buyerEmail = $rowdata['email'];
-            print_r($buyerEmail);
     		$emailBody=getEmailBody($recipientEmail,  $itemname,$buyerEmail);
     		smtp_mailer($recipientEmail,'Regarding Service request',$emailBody);
 

@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import StudentService from '../../Services/StudentService';
 import StudentpurchaseService from '../../Services/StudentpurchaseService';
-import { role,backendUrl } from '../../Constants';
+import { role } from '../../Constants';
 
 function StudentSearchItem(){
 
     document.body.classList.remove('home-background');
     document.body.classList.add('dashboard-background');
     const { id } = useParams();
-    const [type, setType] = useState([]);
     const [itemDetails, setitemDetails] = useState([]);
    
     const [searchDetails, setSearchDetails] = useState({
@@ -68,7 +67,6 @@ function StudentSearchItem(){
         StudentpurchaseService.requestForPurchase(respData)
         .then((resp)=>{
             console.log(JSON.stringify(resp));
-            alert(itemid);
             alert(resp.data.message);
         }).catch((error)=>{
             alert(error);

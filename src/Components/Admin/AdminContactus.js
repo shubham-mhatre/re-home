@@ -18,26 +18,17 @@ const AdminContactus = () => {
     
     const handleSendMail=(e)=>{
         e.preventDefault();
-       /* if(email===""){
-            alert('click on respond button from above queries');
-        }else if(response===""){
-            alert('provide respond message');
-        }else{
-            alert('respond sent successfully');
-        }*/
         const reqData={
             "email": email,
             "response":response
         };
         AdmincontactService.requestForContact(reqData)
         .then((resp)=>{
-          debugger;
             console.log(JSON.stringify(resp));
             alert(resp.data.message);
             setEmail('');//reset email id after success.
             setReponse('');
         }).catch((error)=>{
-          debugger;
             alert(error);
         });
         

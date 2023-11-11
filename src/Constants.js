@@ -29,7 +29,8 @@ export const role={
     "FetchConatctusQuestion":"FetchConatctusQuestion",
     "FetchAllItem":"FetchAllItem",
     "declineItem":"declineItem",
-    "acceptItem":"acceptItem"
+    "acceptItem":"acceptItem",
+    "deleteItem":"deleteItem"
 
 }
 

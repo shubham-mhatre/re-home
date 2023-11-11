@@ -52,6 +52,10 @@ class StudentService{
        
         return axios.post(backendUrl.base+backendUrl.studentDashboard, studentFormData)
     }
+    markDelete(studentFormData){
+       
+        return axios.post(backendUrl.base+backendUrl.studentDashboard, studentFormData)
+    }
 
 
     fetchSoldItem(id){

@@ -31,12 +31,27 @@ const StudentAddItem = () => {
 			[name]: value,
 		}));
 	};
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+    
+        if (file) {
+          const reader = new FileReader();
+    
+          reader.onloadend = () => {
+            setItemDetails((prevItemDetails) => ({
+              ...prevItemDetails,
+              itemImage: reader.result,
+            }));
+          };
+    
+          reader.readAsDataURL(file);
+        }
+      };
 
     const handleSave = (e) => {
         e.preventDefault();
         const {itemName ,brand ,type ,condition , price , itemImage} = itemDetails;
         
-
         const respData={
             "itemName":itemName,
             "brand":brand,
@@ -45,6 +60,7 @@ const StudentAddItem = () => {
             "price":price,
             "itemImage":itemImage,
             "role": role.addItem,
+            "id":id
             
         }
     
@@ -58,7 +74,7 @@ const StudentAddItem = () => {
                 type: "",
                 condition: "",
                 price: "",
-                itemImage: ""
+                itemImage: " "
             });
 		  }).catch((error) => {
 			  alert("error " + error);
@@ -148,8 +164,10 @@ const StudentAddItem = () => {
                             </tr>
                             <tr>
                                 <th><label htmlFor="itemImage"><b>Item image</b></label></th>
-                                    <td><input type="file" id="itemImage" name="itemImage"  value={itemDetails.itemImage}
-                                        onChange={handleInputChange} required/>
+                                    <td><input type="file" 
+                                    id="itemImage" 
+                                    name="itemImage"  
+                                        onChange={handleFileChange} required/>
                                     </td>
                             </tr>
                         </tbody>

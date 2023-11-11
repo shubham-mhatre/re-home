@@ -32,8 +32,8 @@ function StudentItemDetail(){
                 price:itemData.ITEM_PRICE,
                 itemImage: itemData.ITEM_IMG
             });
-            console.log("itemData", itemData);
-            
+            console.log("itemData", itemData);            
+            console.log(itemDetails.itemImage);
    
         })
         .catch((error) => {
@@ -86,6 +86,7 @@ function StudentItemDetail(){
                                 <th><label htmlFor="itemImage"><b>Image</b></label></th>
                                 <td>
                                     <img src={itemDetails.itemImage} className="item-image" />
+
                                 </td>
                             </tr>
                         </tbody>
