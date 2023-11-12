@@ -1,0 +1,6 @@
+projectKey=rehome
+serverUrl=http://localhost:9090
+serverVersion=6.7.1.35068
+dashboardUrl=http://localhost:9090/dashboard/index/rehome
+ceTaskId=AYvCWAGZ6D1aVFq1PHPJ
+ceTaskUrl=http://localhost:9090/api/ce/task?id=AYvCWAGZ6D1aVFq1PHPJ

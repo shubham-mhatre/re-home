@@ -1,0 +1,25 @@
+1.Download sonarqube as zip & extract it in directory
+2.Download sonar scanner as zip & extract it in directory
+3.Download and install JAVA JDK & set it in environment variable.
+4.In Rehome project, created config property file for sonar, named as "sonar-project.properties" at project's root level
+5.Run sonarqube:
+5.1 go to zip extracted directory "path_to_sonar_qube\bin\windows-x86-64\" & click on "StartSonar.bat" to run it.
+6.Run sonar scanner:
+6.1 Open Rehome terminal.
+6.2 go to sonar scanner zip extracted directory. copy path till bin/sonar-scanner
+6.3 run following command : 
+>path_to_sonar_scanner/bin/sonar-scanner
+6.4 after execution completed, we will get url to visit generated report as follows:
+
+INFO: Analysis reports compressed in 8492ms, zip size=433 KB
+INFO: Analysis report uploaded in 2072ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://localhost:9090/dashboard/index/rehome
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://localhost:9090/api/ce/task?id=AYvCWAGZ6D1aVFq1PHPJ
+INFO: Task total time: 53.670 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 56.498s
+INFO: Final Memory: 13M/50M
+INFO: ------------------------------------------------------------------------
